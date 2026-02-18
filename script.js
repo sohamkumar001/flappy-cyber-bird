@@ -154,3 +154,4 @@ canvas.addEventListener("touchstart", (e)=>{
 
 // start game
 startGame();
+
