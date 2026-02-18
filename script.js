@@ -1,7 +1,7 @@
 // SOUND EFFECTS
-const jumpSound = new Audio("sounds/jump.mp3");
-const scoreSound = new Audio("sounds/score.mp3");
-const hitSound = new Audio("sounds/hit.mp3");
+const jumpSound = new Audio("sound/jump.mp3");
+const scoreSound = new Audio("sound/score.mp3");
+const hitSound = new Audio("sound/hit.mp3");
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -167,6 +167,7 @@ canvas.addEventListener("touchstart", (e)=>{
 });
 
 startGame();
+
 
 
 
