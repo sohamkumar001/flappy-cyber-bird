@@ -1,7 +1,7 @@
 // SOUND EFFECTS
-const jumpSound = new Audio("sound/jump.mp3");
-const scoreSound = new Audio("sound/score.mp3");
-const hitSound = new Audio("sound/hit.mp3");
+const jumpSound = new Audio("sounds/jump.mp3");
+const scoreSound = new Audio("sounds/score.mp3");
+const hitSound = new Audio("sounds/hit.mp3");
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -24,12 +24,7 @@ class Bird {
         this.y = H/2;
         this.v = 0;
         this.r = 15;
-
-        jump(){
-    this.v = JUMP;
-    jumpSound.currentTime = 0;
-    jumpSound.play();
-}
+    }
 
     update(){
         this.v += GRAVITY;
@@ -47,6 +42,8 @@ class Bird {
 
     jump(){
         this.v = JUMP;
+        jumpSound.currentTime = 0;
+        jumpSound.play();
     }
 }
 
@@ -56,22 +53,12 @@ class Pipe {
         this.w = 60;
         this.top = Math.random()*(H-PIPE_GAP-100)+50;
         this.passed=false;
-        
-if(!this.passed && this.x < bird.x){
-    score++;
-    document.getElementById("score").innerText=score;
-
-    scoreSound.currentTime = 0;
-    scoreSound.play();
-
-    this.passed=true;
-}
-
     }
 
     update(){
         this.x -= PIPE_SPEED;
 
+        // collision
         if(
             bird.x + bird.r > this.x &&
             bird.x - bird.r < this.x + this.w
@@ -84,9 +71,14 @@ if(!this.passed && this.x < bird.x){
             }
         }
 
+        // scoring
         if(!this.passed && this.x < bird.x){
             score++;
             document.getElementById("score").innerText=score;
+
+            scoreSound.currentTime = 0;
+            scoreSound.play();
+
             this.passed=true;
         }
     }
@@ -112,19 +104,12 @@ function startGame(){
 
 function endGame(){
     running = false;
-    document.getElementById("finalScore").innerText=score;
-    document.getElementById("gameOver").style.display="block";
-
-    function endGame(){
-    running = false;
 
     hitSound.currentTime = 0;
     hitSound.play();
 
     document.getElementById("finalScore").innerText=score;
     document.getElementById("gameOver").style.display="block";
-}
-
 }
 
 let lastPipe = 0;
@@ -156,6 +141,7 @@ function loop(){
     requestAnimationFrame(loop);
 }
 
+// controls
 window.addEventListener("keydown", e=>{
     if(e.code==="Space"||e.code==="ArrowUp") bird.jump();
 });
@@ -166,8 +152,5 @@ canvas.addEventListener("touchstart", (e)=>{
     bird.jump();
 });
 
+// start game
 startGame();
-
-
-
-
